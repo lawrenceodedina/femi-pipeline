@@ -22,7 +22,7 @@ pipeline{
         stage('Docker tag'){
             steps {
                 sh 'docker tag femi-ci:latest 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:latest'
-                sh "docker tag imageversion:v1.$BUILD_NUMBER 396608766727.dkr.ecr.us-east-1.amazonaws.com/jenkins-ci/imageversion:v1.$BUILD_NUMBER"
+                sh "docker tag imageversion:v1.$BUILD_NUMBER 396608766727.dkr.ecr.us-east-1.amazonaws.com/imageversion:v1.$BUILD_NUMBER"
             }
         }
         stage('Docker push'){
