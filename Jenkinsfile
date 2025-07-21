@@ -19,7 +19,7 @@ pipeline{
                 sh 'docker build -t imageversion .'
             }
         }
-        stage('Docker build'){
+        stage('Docker tag'){
             steps {
                 sh 'docker tag femi-ci:latest 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:latest'
                 sh "docker tag imageversion:latest 396608766727.dkr.ecr.us-east-1.amazonaws.com/imageversion:v1.$BUILD_NUMBER"
