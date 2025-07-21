@@ -28,7 +28,7 @@ pipeline{
         stage('Docker push'){
             steps {
                 sh 'docker push 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:latest'
-                sh "docker push 396608766727.dkr.ecr.us-east-1.amazonaws.com/imageversion:v1.$BUILD_NUMBER"
+                sh "396608766727.dkr.ecr.us-east-1.amazonaws.com/jenkins-ciimageversion:v1.$BUILD_NUMBER"
             }
         }
     }
