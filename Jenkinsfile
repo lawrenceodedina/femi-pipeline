@@ -1,6 +1,11 @@
 pipeline{
     agent any
 
+    environment{
+        AWS_REGION = 'us-east-1'
+        IMAGE_ECR_REPO = '396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci'
+        ECR_REPO = '396608766727.dkr.ecr.us-east-1.amazonaws.com'
+    }
     stages{
         stage('Trivy scan'){
             steps {
@@ -10,7 +15,7 @@ pipeline{
         }
         stage('Docker Login'){
             steps {
-                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 396608766727.dkr.ecr.us-east-1.amazonaws.com'
+                sh "aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO"
             }
         }
         stage('Docker build'){
@@ -21,14 +26,14 @@ pipeline{
         }
         stage('Docker tag'){
             steps {
-                sh 'docker tag femi-ci:latest 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:latest'
-                sh "docker tag imageversion 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:v1.$BUILD_NUMBER"
+                sh "docker tag femi-ci:latest $IMAGE_ECR_REPO:latest"
+                sh "docker tag imageversion $IMAGE_ECR_REPO:v1.$BUILD_NUMBER"
             }
         }
         stage('Docker push'){
             steps {
-                sh 'docker push 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:latest'
-                sh "docker push 396608766727.dkr.ecr.us-east-1.amazonaws.com/femi-ci:v1.$BUILD_NUMBER"
+                sh "docker push $IMAGE_ECR_REPO:latest"
+                sh "docker push $IMAGE_ECR_REPO:v1.$BUILD_NUMBER"
             }
         }
     }
