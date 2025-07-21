@@ -4,7 +4,7 @@ pipeline{
     stages{
         stage('Trivy scan'){
             steps {
-                sh 'trivy sf . -o scanreport.html'
+                sh 'trivy fs . -o scanreport.html'
                 sh 'cat scanreport.html'
             }
         }
